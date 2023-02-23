@@ -1,0 +1,22 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ImageSocialNetwork.Infrastructure.Entities
+{
+    public class ImageEntity
+    {
+        [Key]
+        public int ImageID { get; set; }
+        [StringLength(10)]
+        public string Name { get; set; }
+        public string Link { get; set; }
+        public DateTime DateUpload { get; set; }
+        public string Caption { get; set; }
+        public PostEntity Post { get; set; }
+
+    }
+}
