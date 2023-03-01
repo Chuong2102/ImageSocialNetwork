@@ -28,8 +28,15 @@ namespace ImageSocialNetwork
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            // add dbContext
             services.AddDbContext<ImageSocialNetwork.Infrastructure.EF.ImageSocialDbContext>(
                 options => options.UseSqlServer(Configuration.GetConnectionString("ConnectionStringName")));
+            // add Swagger genarator
+            services.AddSwaggerGen(s =>
+            {
+                s.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo { Title = "Upload image API", Version = "v1" });
+            });
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -38,16 +45,17 @@ namespace ImageSocialNetwork
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseSwagger();
+                app.UseSwaggerUI(s => {
+                    s.SwaggerEndpoint("/swagger/v1/swagger.json", "Upload image api");
+                });
             }
 
             app.UseRouting();
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapGet("/", async context =>
-                {
-                    await context.Response.WriteAsync("Hello World!");
-                });
+                endpoints.MapControllers();
             });
         }
     }
