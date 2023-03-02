@@ -18,8 +18,7 @@ namespace ImageSocialNetwork.Infrastructure.Entities
         [StringLength(50)]
         public string Phone { get; set; }
         public int Gender { get; set; }
-
-        public virtual ICollection<UserEntity> Users { get; set; }
+        public AccountEntity Account { get; set; }
 
     }
 }

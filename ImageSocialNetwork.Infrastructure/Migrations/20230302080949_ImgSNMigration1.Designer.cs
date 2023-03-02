@@ -4,14 +4,16 @@ using ImageSocialNetwork.Infrastructure.EF;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace ImageSocialNetwork.Infrastructure.Migrations
 {
     [DbContext(typeof(ImageSocialDbContext))]
-    partial class ImageSocialDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230302080949_ImgSNMigration1")]
+    partial class ImgSNMigration1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

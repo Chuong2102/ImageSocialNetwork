@@ -17,5 +17,6 @@ namespace ImageSocialNetwork.Infrastructure.EF
         public DbSet<Entities.ImageEntity> Images { get; set; }
         public DbSet<Entities.PostEntity> Posts { get; set; }
         public DbSet<Entities.UserEntity> Users { get; set; }
+        public DbSet<Entities.AccountEntity> Accounts { get; set; }
     }
 }
