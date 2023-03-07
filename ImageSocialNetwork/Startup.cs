@@ -42,14 +42,12 @@ namespace ImageSocialNetwork
             });
 
             // JWT
-            services.Configure<JWT>(Configuration.GetSection("JWT"));
+            services.Configure<JWT>(Configuration.GetSection("JWT")); 
             services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            })
-
-                .AddJwtBearer(o =>
+            }).AddJwtBearer(o =>
                 {
                     o.RequireHttpsMetadata = false;
                     o.SaveToken = false;
@@ -81,9 +79,9 @@ namespace ImageSocialNetwork
             }
 
             app.UseAuthentication();
-            app.UseAuthorization();
 
             app.UseRouting();
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {

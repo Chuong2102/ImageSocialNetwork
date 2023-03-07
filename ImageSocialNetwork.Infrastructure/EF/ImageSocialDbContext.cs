@@ -11,7 +11,7 @@ namespace ImageSocialNetwork.Infrastructure.EF
     {
         public ImageSocialDbContext(DbContextOptions<ImageSocialDbContext> options) : base(options)
         {
-
+            
         }
 
         public DbSet<Entities.ImageEntity> Images { get; set; }

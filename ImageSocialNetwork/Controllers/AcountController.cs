@@ -9,21 +9,38 @@ using ImageSocialNetwork.Infrastructure.Entities;
 using ImageSocialNetwork.Infrastructure.Configurations;
 using static ImageSocialNetwork.Infrastructure.Configurations.AccountConfiguration;
 using System.IdentityModel.Tokens.Jwt;
+using Microsoft.Extensions.Configuration;
 
 namespace ImageSocialNetwork.Controllers
 {
-    [Route("api/Login")]
+    
     [ApiController]
     public class AcountController : ControllerBase
     {
         AccountConfiguration accountConfig;
 
-        public AcountController(ImageSocialNetwork.Infrastructure.EF.ImageSocialDbContext context)
+        public AcountController(IConfiguration config ,ImageSocialNetwork.Infrastructure.EF.ImageSocialDbContext context)
         {
-            accountConfig = new AccountConfiguration(context);
+            accountConfig = new AccountConfiguration(context, config);
+        }
+
+        [HttpGet]
+        [Route("api/SignUp")]
+        public Task SignUp(int ID, string Username, string Password, string Role)
+        {
+            accountConfig.AddAccount(ID, Username, Password, Role);
+            return Task.CompletedTask;
+        }
+
+        [Route("api/GetAccounts")]
+        [HttpGet]
+        public IEnumerable<AccountEntity> GetAccounts()
+        {
+            return accountConfig.GetAccounts().ToArray();
         }
 
         [HttpPost]
+        [Route("api/Login")]
         [AllowAnonymous]
         public async Task<ActionResult<dynamic>> GetTokenAsync(string userName, string password)
         {
@@ -34,7 +51,8 @@ namespace ImageSocialNetwork.Controllers
                 return NotFound(new { message = "User or password invalid" });
             }
 
-            var jwtSecurityToken = AccountService.CreateJWTToken(account);
+            // JWT
+            var jwtSecurityToken = AccountService.CreateJWTToken(account, accountConfig);
 
             account.Password = "";
             return new
