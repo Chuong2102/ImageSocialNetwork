@@ -62,5 +62,20 @@ namespace ImageSocialNetwork.Controllers
             };
 
         }
+
+        [HttpGet]
+        [Route("api/GetSecuredData")]
+        public async Task<IActionResult> GetSecuredData()
+        {
+            return Ok("This Secured Data is available only for Authenticated Users");
+        }
+
+        [HttpPost]
+        [Authorize]
+        [Route("api/PostSecuredData")]
+        public async Task<IActionResult> PostSecuredData()
+        {
+            return Ok("This Secured Data is available only for Authenticated Users");
+        }
     }
 }

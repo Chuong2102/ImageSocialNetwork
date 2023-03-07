@@ -83,6 +83,13 @@ namespace ImageSocialNetwork.Infrastructure.Configurations
             signingCredentials: signingCredentials);
             return jwtSecurityToken;
         }
+
+        //public static ClaimsPrincipal GetPrincipal(string token)
+        //{
+
+        //}
+
+        //public 
     }
 }
 
