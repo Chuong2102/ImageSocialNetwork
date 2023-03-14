@@ -11,6 +11,9 @@ using static ImageSocialNetwork.Infrastructure.Configurations.AccountConfigurati
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.Extensions.Configuration;
 using ImageSocialNetwork.Infrastructure.Repositories;
+using ImageSocialNetwork.Infrastructure.EF;
+using MediatR;
+using ImageSocialNetwork.Infrastructure.Queries;
 
 namespace ImageSocialNetwork.Controllers
 {
@@ -19,10 +22,11 @@ namespace ImageSocialNetwork.Controllers
     public class AcountController : ControllerBase
     {
         AccountRepository accountRepo;
+        IMediator mediator;
 
-        public AcountController(IConfiguration config ,ImageSocialNetwork.Infrastructure.EF.ImageSocialDbContext context)
+        public AcountController(IMediator mediator)
         {
-            accountRepo = new AccountRepository(context, config);
+            this.mediator = mediator;
         }
 
         [HttpGet]
@@ -35,9 +39,11 @@ namespace ImageSocialNetwork.Controllers
 
         [Route("api/GetAccounts")]
         [HttpGet]
-        public IEnumerable<AccountEntity> GetAccounts()
+        public async Task<List<AccountEntity>> GetAccounts()
         {
-            return accountRepo.GetAccounts().ToArray();
+            var accounts = await mediator.Send(new GetAccountsQuery());
+
+            return accounts;
         }
 
         [HttpPost]

@@ -15,6 +15,8 @@ using ImageSocialNetwork.Infrastructure.Entities;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using MediatR;
+using System.Reflection;
 
 namespace ImageSocialNetwork
 {
@@ -35,6 +37,10 @@ namespace ImageSocialNetwork
             // add dbContext
             services.AddDbContext<ImageSocialNetwork.Infrastructure.EF.ImageSocialDbContext>(
                 options => options.UseSqlServer(Configuration.GetConnectionString("ConnectionStringName")));
+
+            // Add MediatR
+            services.AddMediatR(Assembly.GetExecutingAssembly());
+
             // add Swagger genarator
             services.AddSwaggerGen(s =>
             {

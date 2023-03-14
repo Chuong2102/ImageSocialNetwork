@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ImageSocialNetwork.Infrastructure.EF;
 using ImageSocialNetwork.Infrastructure.Entities;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 
@@ -28,11 +29,20 @@ namespace ImageSocialNetwork.Infrastructure.Repositories
             this.config = config;
         }
 
+        // Get list Account
+        //
         public List<AccountEntity> GetAccounts()
         {
             return dbContext.Accounts.ToList();
         }
 
+        public async Task<List<AccountEntity>> GetAccountsAsync()
+        {
+            return await dbContext.Accounts.ToListAsync();
+        }
+
+        //
+        //
         public void AddAccount(int ID, string Username, string Password, string Role)
         {
             dbContext.Accounts.Add(new AccountEntity
