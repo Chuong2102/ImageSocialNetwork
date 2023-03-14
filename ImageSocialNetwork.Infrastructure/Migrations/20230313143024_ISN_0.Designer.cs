@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ImageSocialNetwork.Infrastructure.Migrations
 {
     [DbContext(typeof(ImageSocialDbContext))]
-    [Migration("20230302080949_ImgSNMigration1")]
-    partial class ImgSNMigration1
+    [Migration("20230313143024_ISN_0")]
+    partial class ISN_0
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -24,7 +24,9 @@ namespace ImageSocialNetwork.Infrastructure.Migrations
             modelBuilder.Entity("ImageSocialNetwork.Infrastructure.Entities.AccountEntity", b =>
                 {
                     b.Property<int>("AcountID")
-                        .HasColumnType("int");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Password")
                         .HasMaxLength(50)
@@ -33,11 +35,17 @@ namespace ImageSocialNetwork.Infrastructure.Migrations
                     b.Property<string>("Role")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Username")
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)");
 
                     b.HasKey("AcountID");
+
+                    b.HasIndex("UserId")
+                        .IsUnique();
 
                     b.ToTable("Accounts");
                 });
@@ -124,7 +132,7 @@ namespace ImageSocialNetwork.Infrastructure.Migrations
                 {
                     b.HasOne("ImageSocialNetwork.Infrastructure.Entities.UserEntity", "User")
                         .WithOne("Account")
-                        .HasForeignKey("ImageSocialNetwork.Infrastructure.Entities.AccountEntity", "AcountID")
+                        .HasForeignKey("ImageSocialNetwork.Infrastructure.Entities.AccountEntity", "UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

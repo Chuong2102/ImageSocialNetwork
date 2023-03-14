@@ -10,6 +10,7 @@ using ImageSocialNetwork.Infrastructure.Configurations;
 using static ImageSocialNetwork.Infrastructure.Configurations.AccountConfiguration;
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.Extensions.Configuration;
+using ImageSocialNetwork.Infrastructure.Repositories;
 
 namespace ImageSocialNetwork.Controllers
 {
@@ -17,18 +18,18 @@ namespace ImageSocialNetwork.Controllers
     [ApiController]
     public class AcountController : ControllerBase
     {
-        AccountConfiguration accountConfig;
+        AccountRepository accountRepo;
 
         public AcountController(IConfiguration config ,ImageSocialNetwork.Infrastructure.EF.ImageSocialDbContext context)
         {
-            accountConfig = new AccountConfiguration(context, config);
+            accountRepo = new AccountRepository(context, config);
         }
 
         [HttpGet]
         [Route("api/SignUp")]
         public Task SignUp(int ID, string Username, string Password, string Role)
         {
-            accountConfig.AddAccount(ID, Username, Password, Role);
+            accountRepo.AddAccount(ID, Username, Password, Role);
             return Task.CompletedTask;
         }
 
@@ -36,7 +37,7 @@ namespace ImageSocialNetwork.Controllers
         [HttpGet]
         public IEnumerable<AccountEntity> GetAccounts()
         {
-            return accountConfig.GetAccounts().ToArray();
+            return accountRepo.GetAccounts().ToArray();
         }
 
         [HttpPost]
@@ -44,7 +45,7 @@ namespace ImageSocialNetwork.Controllers
         [AllowAnonymous]
         public async Task<ActionResult<dynamic>> GetTokenAsync(string userName, string password)
         {
-            var account = AccountService.Get(accountConfig, userName, password);
+            var account = AccountService.Get(accountRepo, userName, password);
 
             if(account == null)
             {
@@ -52,7 +53,7 @@ namespace ImageSocialNetwork.Controllers
             }
 
             // JWT
-            var jwtSecurityToken = AccountService.CreateJWTToken(account, accountConfig);
+            var jwtSecurityToken = AccountService.CreateJWTToken(account, accountRepo);
 
             account.Password = "";
             return new
