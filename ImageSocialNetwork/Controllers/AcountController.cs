@@ -24,10 +24,16 @@ namespace ImageSocialNetwork.Controllers
         AccountRepository accountRepo;
         IMediator mediator;
 
-        public AcountController(IMediator mediator)
+        public AcountController(IConfiguration config, ImageSocialDbContext context)
         {
-            this.mediator = mediator;
+            accountRepo = new AccountRepository(context, config);
         }
+
+        //public AcountController(IMediator media)
+        //{
+        //    mediator = media;
+        //}
+
 
         [HttpGet]
         [Route("api/SignUp")]
