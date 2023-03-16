@@ -12,5 +12,7 @@ namespace ImageSocialNetwork.Infrastructure.Repositories
     {
         public Task<List<AccountEntity>> GetAccountsAsync();
         public List<AccountEntity> GetAccounts();
+        public AccountEntity GetAccount(string username, string password);
+        public Task<AccountEntity> GetAccountAsync(string username, string password);
     }
 }

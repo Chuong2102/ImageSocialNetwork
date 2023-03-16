@@ -55,9 +55,13 @@ namespace ImageSocialNetwork.Controllers
         [HttpPost]
         [Route("api/Login")]
         [AllowAnonymous]
-        public async Task<ActionResult<dynamic>> GetTokenAsync(string userName, string password)
+        public async Task<ActionResult<dynamic>> GetTokenAsync(string username, string password)
         {
-            var account = AccountService.Get(accountRepo, userName, password);
+            var account = await mediator.Send(new GetAccountQuery
+            {
+                Username = username,
+                Password = password
+            });
 
             if(account == null)
             {
@@ -65,7 +69,7 @@ namespace ImageSocialNetwork.Controllers
             }
 
             // JWT
-            var jwtSecurityToken = AccountService.CreateJWTToken(account, accountRepo);
+            var jwtSecurityToken = AccountService.CreateJWTToken(account);
 
             account.Password = "";
             return new

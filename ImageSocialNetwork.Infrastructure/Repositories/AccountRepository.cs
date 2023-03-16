@@ -16,17 +16,26 @@ namespace ImageSocialNetwork.Infrastructure.Repositories
     public class AccountRepository : IAccountRepository
     {
         private readonly ImageSocialDbContext dbContext;
-        public IConfiguration config;
+        public static IConfiguration config;
 
-        public AccountRepository(ImageSocialDbContext dbContext)
+        public AccountRepository(ImageSocialDbContext dbContext, IConfiguration _config)
         {
             this.dbContext = dbContext;
+            config = _config;
         }
 
-        public AccountRepository(ImageSocialDbContext dbContext, IConfiguration config)
+        // Get account by username and password
+        //
+        public AccountEntity GetAccount(string username, string password)
         {
-            this.dbContext = dbContext;
-            this.config = config;
+            return dbContext.Accounts.Where(account => account.Username == username
+            && account.Password == password).FirstOrDefault();
+        }
+
+        public async Task<AccountEntity> GetAccountAsync(string username, string password)
+        {
+            return await dbContext.Accounts.Where(account => account.Username == username
+            && account.Password == password).FirstOrDefaultAsync();
         }
 
         // Get list Account
@@ -66,14 +75,14 @@ namespace ImageSocialNetwork.Infrastructure.Repositories
 
         }
 
-        public static JwtSecurityToken CreateJWTToken(AccountEntity account, AccountRepository configuration)
+        public static JwtSecurityToken CreateJWTToken(AccountEntity account)
         {
             JWT jwt = new JWT
             {
-                Key = configuration.config["JWT:Key"],
-                Audience = configuration.config["JWT:Audience"],
-                Issuer = configuration.config["JWT:Issuer"],
-                DurationInMinutes = Double.Parse(configuration.config["JWT:DurationInMinutes"])
+                Key = AccountRepository.config["JWT:Key"],
+                Audience = AccountRepository.config["JWT:Audience"],
+                Issuer = AccountRepository.config["JWT:Issuer"],
+                DurationInMinutes = Double.Parse(AccountRepository.config["JWT:DurationInMinutes"])
             };
 
             var claims = new[]
