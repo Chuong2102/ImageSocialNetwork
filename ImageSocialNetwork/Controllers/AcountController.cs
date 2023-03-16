@@ -43,6 +43,7 @@ namespace ImageSocialNetwork.Controllers
             return Task.CompletedTask;
         }
 
+        [Authorize]
         [Route("api/GetAccounts")]
         [HttpGet]
         public async Task<List<AccountEntity>> GetAccounts()
