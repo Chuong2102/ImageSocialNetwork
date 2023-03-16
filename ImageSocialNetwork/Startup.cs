@@ -17,6 +17,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using MediatR;
 using System.Reflection;
+using ImageSocialNetwork.Infrastructure.Repositories;
 
 namespace ImageSocialNetwork
 {
@@ -39,7 +40,8 @@ namespace ImageSocialNetwork
                 options => options.UseSqlServer(Configuration.GetConnectionString("ConnectionStringName")));
 
             // Add MediatR
-            services.AddMediatR(Assembly.GetExecutingAssembly());
+            services.AddScoped(typeof(IAccountRepository), typeof(AccountRepository));
+            services.AddMediatR(typeof(AccountRepository).Assembly);
 
             // add Swagger genarator
             services.AddSwaggerGen(s =>

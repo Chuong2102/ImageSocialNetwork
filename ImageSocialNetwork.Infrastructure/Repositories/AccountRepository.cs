@@ -13,7 +13,7 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace ImageSocialNetwork.Infrastructure.Repositories
 {
-    public class AccountRepository
+    public class AccountRepository : IAccountRepository
     {
         private readonly ImageSocialDbContext dbContext;
         public IConfiguration config;

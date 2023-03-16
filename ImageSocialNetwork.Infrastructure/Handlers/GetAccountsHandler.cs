@@ -13,9 +13,9 @@ namespace ImageSocialNetwork.Infrastructure.Handlers
 {
     class GetAccountsHandler : IRequestHandler<GetAccountsQuery, List<AccountEntity>>
     {
-        readonly AccountRepository accountRepo;
+        readonly IAccountRepository accountRepo;
 
-        public GetAccountsHandler(AccountRepository repository)
+        public GetAccountsHandler(IAccountRepository repository)
         {
             accountRepo = repository;
         }
