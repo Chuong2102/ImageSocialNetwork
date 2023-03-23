@@ -56,13 +56,9 @@ namespace ImageSocialNetwork.Controllers
         [HttpPost]
         [Route("api/Login")]
         [AllowAnonymous]
-        public async Task<ActionResult<dynamic>> GetTokenAsync(string username, string password)
+        public async Task<ActionResult<dynamic>> GetTokenAsync([FromBody] GetAccountQuery accountQuery)
         {
-            var account = await mediator.Send(new GetAccountQuery
-            {
-                Username = username,
-                Password = password
-            });
+            var account = await mediator.Send(accountQuery);
 
             if(account == null)
             {
@@ -81,19 +77,19 @@ namespace ImageSocialNetwork.Controllers
 
         }
 
-        [HttpGet]
-        [Route("api/GetSecuredData")]
-        public async Task<IActionResult> GetSecuredData()
-        {
-            return Ok("This Secured Data is available only for Authenticated Users");
-        }
+        //[HttpGet]
+        //[Route("api/GetSecuredData")]
+        //public async Task<IActionResult> GetSecuredData()
+        //{
+        //    return Ok("This Secured Data is available only for Authenticated Users");
+        //}
 
-        [HttpPost]
-        [Authorize]
-        [Route("api/PostSecuredData")]
-        public async Task<IActionResult> PostSecuredData()
-        {
-            return Ok("This Secured Data is available only for Authenticated Users");
-        }
+        //[HttpPost]
+        //[Authorize]
+        //[Route("api/PostSecuredData")]
+        //public async Task<IActionResult> PostSecuredData()
+        //{
+        //    return Ok("This Secured Data is available only for Authenticated Users");
+        //}
     }
 }

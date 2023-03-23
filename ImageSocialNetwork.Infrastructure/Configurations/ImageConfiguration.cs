@@ -9,16 +9,6 @@ namespace ImageSocialNetwork.Infrastructure.Configurations
 {
     public class ImageConfiguration
     {
-        readonly ImageSocialNetwork.Infrastructure.EF.ImageSocialDbContext dbContext;
-
-        public ImageConfiguration(ImageSocialNetwork.Infrastructure.EF.ImageSocialDbContext dbContext)
-        {
-            this.dbContext = dbContext;
-        }
-
-        public List<Entities.ImageEntity> GetImages()
-        {
-            return dbContext.Images.ToList();
-        }
+        
     }
 }

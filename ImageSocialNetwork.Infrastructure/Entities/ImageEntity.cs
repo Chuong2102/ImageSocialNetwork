@@ -14,9 +14,7 @@ namespace ImageSocialNetwork.Infrastructure.Entities
         public int ImageID { get; set; }
         [StringLength(10)]
         public string Name { get; set; }
-        public string Link { get; set; }
-        public DateTime DateUpload { get; set; }
-        public string Caption { get; set; }
+        public string ImagePath { get; set; }
         public PostEntity Post { get; set; }
 
     }

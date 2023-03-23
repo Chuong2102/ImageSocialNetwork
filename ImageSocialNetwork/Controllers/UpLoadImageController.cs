@@ -13,17 +13,6 @@ namespace ImageSocialNetwork.Controllers
     [ApiController]
     public class UpLoadImageController : ControllerBase
     {
-        ImageConfiguration imageConfiguration;
-
-        public UpLoadImageController(ImageSocialDbContext context)
-        {
-            imageConfiguration = new ImageConfiguration(context);
-        }
-
-        [HttpGet]
-        public IEnumerable<ImageSocialNetwork.Infrastructure.Entities.ImageEntity> GetImages()
-        {
-            return imageConfiguration.GetImages().ToArray();
-        }
+       
     }
 }

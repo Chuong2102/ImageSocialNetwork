@@ -14,10 +14,12 @@ namespace ImageSocialNetwork.Infrastructure.Entities
 
         public string UserName { get; set; }
         public string FullName { get; set; }
+        public DateTime DateOfBirth { get; set; }
         public string Email { get; set; }
         [StringLength(50)]
         public string Phone { get; set; }
         public int Gender { get; set; }
+        public DateTime LasLogin { get; set; }
         public AccountEntity Account { get; set; }
 
     }

@@ -12,26 +12,6 @@ namespace ImageSocialNetwork.Infrastructure.Configurations
 {
     public class UserConfiguration
     {
-        ImageSocialDbContext dbContext;
-        public UserConfiguration(ImageSocialDbContext dbContext)
-        {
-            this.dbContext = dbContext;
-        }
 
-        // Get user
-        public List<UserEntity> GetUsers()
-        {
-            return dbContext.Users.ToList();
-        }
-
-    }
-
-    public static class UserService
-    {
-        public static UserEntity Get(UserConfiguration userConfig)
-        {
-            return userConfig.GetUsers().FirstOrDefault();
-
-        }
     }
 }

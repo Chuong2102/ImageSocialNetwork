@@ -7,13 +7,11 @@ using System.Threading.Tasks;
 
 namespace ImageSocialNetwork.Infrastructure.Entities
 {
-    public class PostEntity
+    public class LikeEntity
     {
         [Key]
-        public int PostID { get; set; }
-        public string Caption { get; set; }
-        public DateTime CreationDate { get; set; }
+        public int LikeID { get; set; }
         public UserEntity User { get; set; }
-
+        public PostEntity Post { get; set; }
     }
 }
