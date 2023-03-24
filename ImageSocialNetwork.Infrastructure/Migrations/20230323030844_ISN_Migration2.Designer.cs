@@ -4,14 +4,16 @@ using ImageSocialNetwork.Infrastructure.EF;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace ImageSocialNetwork.Infrastructure.Migrations
 {
     [DbContext(typeof(ImageSocialDbContext))]
-    partial class ImageSocialDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230323030844_ISN_Migration2")]
+    partial class ISN_Migration2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -58,6 +60,9 @@ namespace ImageSocialNetwork.Infrastructure.Migrations
                     b.Property<int?>("PostID")
                         .HasColumnType("int");
 
+                    b.Property<int>("TotalComment")
+                        .HasColumnType("int");
+
                     b.Property<int?>("UserID")
                         .HasColumnType("int");
 
@@ -80,14 +85,17 @@ namespace ImageSocialNetwork.Infrastructure.Migrations
                     b.Property<int?>("FollowerUserID")
                         .HasColumnType("int");
 
-                    b.Property<int?>("UserID")
+                    b.Property<int?>("FollowingUserID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TotalFollower")
                         .HasColumnType("int");
 
                     b.HasKey("FollowerID");
 
                     b.HasIndex("FollowerUserID");
 
-                    b.HasIndex("UserID");
+                    b.HasIndex("FollowingUserID");
 
                     b.ToTable("Followers");
                 });
@@ -99,17 +107,20 @@ namespace ImageSocialNetwork.Infrastructure.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int?>("FollowerUserID")
+                        .HasColumnType("int");
+
                     b.Property<int?>("FollowingUserID")
                         .HasColumnType("int");
 
-                    b.Property<int?>("UserID")
+                    b.Property<int>("ToltalFollowing")
                         .HasColumnType("int");
 
                     b.HasKey("FollowingID");
 
-                    b.HasIndex("FollowingUserID");
+                    b.HasIndex("FollowerUserID");
 
-                    b.HasIndex("UserID");
+                    b.HasIndex("FollowingUserID");
 
                     b.ToTable("Followings");
                 });
@@ -176,10 +187,7 @@ namespace ImageSocialNetwork.Infrastructure.Migrations
                     b.Property<DateTime>("CreationDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("TotalComments")
-                        .HasColumnType("int");
-
-                    b.Property<int>("TotalLikes")
+                    b.Property<int>("TotalPost")
                         .HasColumnType("int");
 
                     b.Property<int?>("UserID")
@@ -217,15 +225,6 @@ namespace ImageSocialNetwork.Infrastructure.Migrations
                     b.Property<string>("Phone")
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
-
-                    b.Property<int>("ToltalFollower")
-                        .HasColumnType("int");
-
-                    b.Property<int>("TotalFollowing")
-                        .HasColumnType("int");
-
-                    b.Property<int>("TotalPost")
-                        .HasColumnType("int");
 
                     b.Property<string>("UserName")
                         .HasColumnType("nvarchar(max)");
@@ -267,28 +266,28 @@ namespace ImageSocialNetwork.Infrastructure.Migrations
                         .WithMany()
                         .HasForeignKey("FollowerUserID");
 
-                    b.HasOne("ImageSocialNetwork.Infrastructure.Entities.UserEntity", "User")
-                        .WithMany()
-                        .HasForeignKey("UserID");
-
-                    b.Navigation("Follower");
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("ImageSocialNetwork.Infrastructure.Entities.FollowingEntity", b =>
-                {
                     b.HasOne("ImageSocialNetwork.Infrastructure.Entities.UserEntity", "Following")
                         .WithMany()
                         .HasForeignKey("FollowingUserID");
 
-                    b.HasOne("ImageSocialNetwork.Infrastructure.Entities.UserEntity", "User")
-                        .WithMany()
-                        .HasForeignKey("UserID");
+                    b.Navigation("Follower");
 
                     b.Navigation("Following");
+                });
 
-                    b.Navigation("User");
+            modelBuilder.Entity("ImageSocialNetwork.Infrastructure.Entities.FollowingEntity", b =>
+                {
+                    b.HasOne("ImageSocialNetwork.Infrastructure.Entities.UserEntity", "Follower")
+                        .WithMany()
+                        .HasForeignKey("FollowerUserID");
+
+                    b.HasOne("ImageSocialNetwork.Infrastructure.Entities.UserEntity", "Following")
+                        .WithMany()
+                        .HasForeignKey("FollowingUserID");
+
+                    b.Navigation("Follower");
+
+                    b.Navigation("Following");
                 });
 
             modelBuilder.Entity("ImageSocialNetwork.Infrastructure.Entities.ImageEntity", b =>

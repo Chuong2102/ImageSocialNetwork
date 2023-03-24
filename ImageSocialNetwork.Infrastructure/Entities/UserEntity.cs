@@ -21,6 +21,9 @@ namespace ImageSocialNetwork.Infrastructure.Entities
         public int Gender { get; set; }
         public DateTime LasLogin { get; set; }
         public AccountEntity Account { get; set; }
+        public int TotalPost { get; set; }
+        public int ToltalFollower { get; set; }
+        public int TotalFollowing { get; set; }
 
     }
 }

@@ -11,8 +11,8 @@ namespace ImageSocialNetwork.Infrastructure.Entities
     {
         [Key]
         public int FollowerID { get; set; }
+        public UserEntity User { get; set; }
         public UserEntity Follower { get; set; }
-        public UserEntity Following { get; set; }
 
     }
 }

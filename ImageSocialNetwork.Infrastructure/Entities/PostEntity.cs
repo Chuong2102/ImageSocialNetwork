@@ -14,6 +14,8 @@ namespace ImageSocialNetwork.Infrastructure.Entities
         public string Caption { get; set; }
         public DateTime CreationDate { get; set; }
         public UserEntity User { get; set; }
+        public int TotalLikes { get; set; }
+        public int TotalComments { get; set; }
 
     }
 }
