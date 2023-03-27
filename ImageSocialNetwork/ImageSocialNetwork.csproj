@@ -30,4 +30,8 @@
     <ProjectReference Include="..\ImageSocialNetwork.Infrastructure\ImageSocialNetwork.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\" />
+  </ItemGroup>
+
 </Project>
