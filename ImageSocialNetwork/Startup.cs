@@ -41,8 +41,16 @@ namespace ImageSocialNetwork
                 options => options.UseSqlServer(Configuration.GetConnectionString("ConnectionStringName")));
 
             // Add MediatR
+            // Account
             services.AddScoped(typeof(IAccountRepository), typeof(AccountRepository));
             services.AddMediatR(typeof(AccountRepository).Assembly);
+
+            // Image
+            services.AddScoped(typeof(IIamgeRepository), typeof(ImageRepository));
+            services.AddMediatR(typeof(ImageRepository).Assembly);
+            // Post
+            services.AddScoped(typeof(IPostRespository), typeof(PostRepository));
+            services.AddMediatR(typeof(PostRepository).Assembly);
 
             // add Swagger genarator
             services.AddSwaggerGen(s =>
