@@ -10,6 +10,7 @@ using ImageSocialNetwork.Infrastructure.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.Data.SqlClient;
 
 namespace ImageSocialNetwork.Infrastructure.Repositories
 {
@@ -64,6 +65,7 @@ namespace ImageSocialNetwork.Infrastructure.Repositories
 
             dbContext.SaveChanges();
         }
+
     }
 
     public static class AccountService

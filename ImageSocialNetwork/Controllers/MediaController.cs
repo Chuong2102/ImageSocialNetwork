@@ -60,6 +60,8 @@ namespace ImageSocialNetwork.Controllers
 
         #endregion
 
+        // Create new post and upload new images to this post
+        //
         [HttpPost]
         [Route("api/AddPost")]
         public async Task<PostEntity> AddPost([FromBody] AddPostCommand post,[FromForm] IFormFile file)
@@ -83,6 +85,18 @@ namespace ImageSocialNetwork.Controllers
             return newPost;
         }
 
+        // Create new User
+        [HttpPost]
+        [Route("api/AddUser")]
+        public async Task<int> AddUser([FromBody] UserEntity user)
+        {
+
+            var result = await mediator.Send(new AddUserCommand(user));
+
+            return result;
+        }
+        
+            
 
     }
 }
