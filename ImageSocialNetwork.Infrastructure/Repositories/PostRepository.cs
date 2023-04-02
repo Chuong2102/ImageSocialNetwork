@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using ImageSocialNetwork.Infrastructure.EF;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Data.SqlClient;
+using System.Data;
 
 namespace ImageSocialNetwork.Infrastructure.Repositories
 {
@@ -21,17 +22,20 @@ namespace ImageSocialNetwork.Infrastructure.Repositories
         public async Task<int> AddPostAsync(PostEntity post)
         {
             var parameters = new List<SqlParameter>();
-            int postID = -5;
 
-            parameters.Add(new SqlParameter("@Caption", post.Caption));
-            parameters.Add(new SqlParameter("@UserID", post.User.UserID));
-            parameters.Add(new SqlParameter("@PostID", postID));
+            // Output para
+            var output = new SqlParameter();
+            output.ParameterName = "@PostID";
+            output.SqlDbType = SqlDbType.Int;
+            output.Direction = ParameterDirection.Output;
+            //
+            var par0 = new SqlParameter("@Caption", post.Caption);
+            var par1 = new SqlParameter("@UserID", post.User.UserID);
 
             var result = await Task.Run(() => dbContext.Database.ExecuteSqlRawAsync(
-                @"exec proc_AddPost @UserID, @Caption, @PostID out", parameters.ToArray()
-            ));
+                @"exec proc_AddPost @UserID, @Caption, @PostID OUT", par0, par1, output));
 
-            return (int)parameters.ToArray()[2].Value;
+            return (int)output.Value;
         }
 
         public List<PostEntity> GetPosts()
