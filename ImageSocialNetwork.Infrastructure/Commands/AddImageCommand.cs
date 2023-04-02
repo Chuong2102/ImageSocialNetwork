@@ -8,7 +8,7 @@ using ImageSocialNetwork.Infrastructure.Entities;
 
 namespace ImageSocialNetwork.Infrastructure.Commands
 {
-    public class AddImageCommand : IRequest<ImageEntity>
+    public class AddImageCommand : IRequest<int>
     {
         public int PostID { get; set; }
         public string ImagePath { get; set; }

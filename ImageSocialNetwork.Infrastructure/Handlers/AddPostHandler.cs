@@ -11,7 +11,7 @@ using System.Threading;
 
 namespace ImageSocialNetwork.Infrastructure.Handlers
 {
-    class AddPostHandler : IRequestHandler<AddPostCommand, PostEntity>
+    class AddPostHandler : IRequestHandler<AddPostCommand, int>
     {
         IPostRespository respository;
 
@@ -20,7 +20,7 @@ namespace ImageSocialNetwork.Infrastructure.Handlers
             respository = repo;
         }
 
-        public async Task<PostEntity> Handle(AddPostCommand request, CancellationToken cancellationToken)
+        public async Task<int> Handle(AddPostCommand request, CancellationToken cancellationToken)
         {
             PostEntity post = new PostEntity
             {

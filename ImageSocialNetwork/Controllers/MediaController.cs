@@ -26,6 +26,13 @@ namespace ImageSocialNetwork.Controllers
             this.environment = env;
         }
 
+        public class FileUploadAPI
+        {
+            public string Caption { get; set; }
+            public int UserID { get; set; }
+            public IFormFile file { get; set; }
+        }
+
         #region UPLOAD METHOD
         async Task<string> UploadImage(IFormFile file)
         {
@@ -64,25 +71,28 @@ namespace ImageSocialNetwork.Controllers
         //
         [HttpPost]
         [Route("api/AddPost")]
-        public async Task<PostEntity> AddPost([FromBody] AddPostCommand post,[FromForm] IFormFile file)
+        public async Task<int> AddPost([FromForm]FileUploadAPI fileUpload)
         {
             // Up new Images and get path of them
-            string ImagePath = await UploadImage(file);
+            string ImagePath = await UploadImage(fileUpload.file);
 
             // Create new POST
-            var newPost = await mediator.Send(post);
+            var PostID = await mediator.Send(new AddPostCommand(fileUpload.Caption, fileUpload.UserID));
 
             // Create new Images
             ImageEntity image = new ImageEntity
             {
-                Name = file.FileName,
+                Name = fileUpload.file.FileName,
                 ImagePath = ImagePath,
-                Post = newPost
+                Post = new PostEntity
+                {
+                    PostID = PostID
+                }
             };
 
             var newImage = await mediator.Send(new AddImageCommand(image));
 
-            return newPost;
+            return PostID;
         }
 
         // Create new User

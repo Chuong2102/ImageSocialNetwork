@@ -11,7 +11,7 @@ using System.Threading;
 
 namespace ImageSocialNetwork.Infrastructure.Handlers
 {
-    class AddImageHandler : IRequestHandler<AddImageCommand, ImageEntity>
+    class AddImageHandler : IRequestHandler<AddImageCommand, int>
     {
         IIamgeRepository repository;
         public AddImageHandler(IIamgeRepository repo)
@@ -19,7 +19,7 @@ namespace ImageSocialNetwork.Infrastructure.Handlers
             repository = repo;
         }
 
-        public async Task<ImageEntity> Handle(AddImageCommand request, CancellationToken cancellationToken)
+        public async Task<int> Handle(AddImageCommand request, CancellationToken cancellationToken)
         {
             ImageEntity image = new ImageEntity
             {

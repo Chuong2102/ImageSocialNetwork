@@ -9,6 +9,6 @@ namespace ImageSocialNetwork.Infrastructure.Repositories
 {
     public interface IIamgeRepository
     {
-        public Task<ImageEntity> AddImageAsync(ImageEntity image);
+        public Task<int> AddImageAsync(ImageEntity image);
     }
 }

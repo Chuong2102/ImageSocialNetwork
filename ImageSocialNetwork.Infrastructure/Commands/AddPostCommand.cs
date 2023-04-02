@@ -8,15 +8,15 @@ using ImageSocialNetwork.Infrastructure.Entities;
 
 namespace ImageSocialNetwork.Infrastructure.Commands
 {
-    public class AddPostCommand : IRequest<PostEntity>
+    public class AddPostCommand : IRequest<int>
     {
         public string Caption { get; set; }
         public int UserID { get; set; }
 
-        public AddPostCommand(PostEntity post)
+        public AddPostCommand(string Caption, int UserID)
         {
-            this.Caption = post.Caption;
-            this.UserID = post.User.UserID;
+            this.Caption = Caption;
+            this.UserID = UserID;
         }
     }
 }
