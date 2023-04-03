@@ -104,6 +104,13 @@ namespace ImageSocialNetwork.Controllers
             return await mediator.Send(comment);
         }
 
+        [HttpPost]
+        [Route("api/AddLike")]
+        public async Task<int> AddLike([FromBody] AddLikeCommand like)
+        {
+            return await mediator.Send(like);
+        }
+
         // Create new User
         //
         [HttpPost]
