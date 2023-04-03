@@ -68,7 +68,7 @@ namespace ImageSocialNetwork.Controllers
         #endregion
 
         // Create new post and upload new images to this post
-        //
+        // return postID
         [HttpPost]
         [Route("api/AddPost")]
         public async Task<int> AddPost([FromForm]FileUploadAPI fileUpload)
@@ -95,12 +95,21 @@ namespace ImageSocialNetwork.Controllers
             return PostID;
         }
 
+        // Create new comment
+        // return PostID
+        [HttpPost]
+        [Route("api/AddComment")]
+        public async Task<int> AddComment([FromBody] AddCommentCommand comment)
+        {
+            return await mediator.Send(new AddCommentCommand(comment.UserID, comment.PostID, comment.Text));
+        }
+
         // Create new User
+        //
         [HttpPost]
         [Route("api/AddUser")]
         public async Task<int> AddUser([FromBody] UserEntity user)
         {
-
             var result = await mediator.Send(new AddUserCommand(user));
 
             return result;

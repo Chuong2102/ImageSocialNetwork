@@ -54,6 +54,9 @@ namespace ImageSocialNetwork
             // User
             services.AddScoped(typeof(IUserRepository), typeof(UserRepository));
             services.AddMediatR(typeof(UserRepository).Assembly);
+            // Comment
+            services.AddScoped(typeof(ICommentRepository), typeof(CommentRepository));
+            services.AddMediatR(typeof(CommentRepository).Assembly);
 
             // add Swagger genarator
             services.AddSwaggerGen(s =>

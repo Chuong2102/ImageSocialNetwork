@@ -13,6 +13,5 @@ namespace ImageSocialNetwork.Infrastructure.Entities
         public int LikeID { get; set; }
         public UserEntity User { get; set; }
         public PostEntity Post { get; set; }
-        public int TotalLikes { get; set; }
     }
 }
