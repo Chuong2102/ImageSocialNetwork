@@ -101,7 +101,7 @@ namespace ImageSocialNetwork.Controllers
         [Route("api/AddComment")]
         public async Task<int> AddComment([FromBody] AddCommentCommand comment)
         {
-            return await mediator.Send(new AddCommentCommand(comment.UserID, comment.PostID, comment.Text));
+            return await mediator.Send(comment);
         }
 
         // Create new User

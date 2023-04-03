@@ -6,8 +6,9 @@ for insert
 as
 begin
 	update Posts
-	set TotalComments = (select count(c.CommentID) from Comments as c
-						join Posts as p on c.PostID = p.PostID
+	set TotalComments = (select count(i.CommentID) from inserted as i
+						join Posts as p on i.PostID = p.PostID
+						join Comments as c on c.PostID = p.PostID
 					 )
 	where PostID in (select i.PostID from inserted as i)
 end
