@@ -38,6 +38,42 @@ namespace ImageSocialNetwork.Infrastructure.Repositories
             return (int)output.Value;
         }
 
+        public async Task<IEnumerable<PostEntity>> GetFollwingUserPosts(int UserID)
+        {
+            var par = new SqlParameter("@UserID", UserID);
+            List<PostEntity> listPost = new List<PostEntity>();
+
+            try
+            {
+                listPost = await Task.Run(() => dbContext.Posts.FromSqlRaw(
+                @"exec proc_FollowingPost @UserID", par).ToListAsync());
+
+
+            }
+            catch(Exception ex)
+            {
+
+            }
+
+            return listPost;
+        }
+
+        public async Task<IEnumerable<PostEntity>> GetPost(int UserID)
+        {
+            List<PostEntity> posts = new List<PostEntity>();
+
+            try
+            {
+                posts = await dbContext.Posts.Where(p => p.User.UserID == UserID).ToListAsync();
+            }
+            catch(Exception ex)
+            {
+
+            }
+
+            return posts;
+        }
+
         public List<PostEntity> GetPosts()
         {
             return dbContext.Posts.ToList();

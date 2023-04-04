@@ -7,11 +7,12 @@ using System.Text;
 using System.Threading.Tasks;
 using ImageSocialNetwork.Infrastructure.EF;
 using ImageSocialNetwork.Infrastructure.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace ImageSocialNetwork.Infrastructure.Configurations
 {
     public class UserConfiguration
     {
-
+        
     }
 }

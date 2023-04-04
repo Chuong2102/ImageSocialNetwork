@@ -8,6 +8,7 @@ using ImageSocialNetwork.Infrastructure.Repositories;
 using ImageSocialNetwork.Infrastructure.EF;
 using MediatR;
 using ImageSocialNetwork.Infrastructure.Commands;
+using ImageSocialNetwork.Infrastructure.Queries;
 using ImageSocialNetwork.Infrastructure.Entities;
 using Microsoft.AspNetCore.Hosting;
 using System.IO;
@@ -109,6 +110,21 @@ namespace ImageSocialNetwork.Controllers
         public async Task<int> AddLike([FromBody] AddLikeCommand like)
         {
             return await mediator.Send(like);
+        }
+
+        // Create list Post of userid' follwing user
+        [HttpPost]
+        [Route("api/GetFollwingUserPosts")]
+        public async Task<IEnumerable<PostEntity>> GetFollowingUserPost([FromBody] GetFollowingUserPostQuery user)
+        {
+            return await mediator.Send(user);
+        }
+
+        [HttpPost]
+        [Route("api/GetPostByUserID")]
+        public async Task<IEnumerable<PostEntity>> GetPostByUserID([FromBody] GetPostByUserIDQuery user)
+        {
+            return await mediator.Send(user);
         }
 
         // Create new User

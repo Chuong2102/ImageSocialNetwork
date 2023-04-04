@@ -12,5 +12,8 @@ namespace ImageSocialNetwork.Infrastructure.Repositories
         public Task<List<PostEntity>> GetPostsAsync();
         public List<PostEntity> GetPosts();
         public Task<int> AddPostAsync(PostEntity post);
+        public Task<IEnumerable<PostEntity>> GetFollwingUserPosts(int UserID);
+        public Task<IEnumerable<PostEntity>> GetPost(int UserID);
+
     }
 }

@@ -1,0 +1,15 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using MediatR;
+using ImageSocialNetwork.Infrastructure.Entities;
+
+namespace ImageSocialNetwork.Infrastructure.Queries
+{
+    public class GetPostByUserIDQuery : IRequest<IEnumerable<PostEntity>>
+    {
+        public int UserID { get; set; }
+    }
+}
