@@ -18,17 +18,17 @@ namespace ImageSocialNetwork.Infrastructure.Repositories
             this.dbContext = db;
         }
 
-        public async Task<int> AddUserAsync(UserEntity user)
+        public async Task<int> AddUserAsync(string Username, string Password, string Fullname, string Phone, int Gender, string Email, DateTime DateOfBirth)
         {
             var parameters = new List<SqlParameter>();
 
-            parameters.Add(new SqlParameter("@Username", user.UserName));
-            parameters.Add(new SqlParameter("@Fullname", user.FullName));
-            parameters.Add(new SqlParameter("@Email", user.Email));
-            parameters.Add(new SqlParameter("@Phone", user.Phone));
-            parameters.Add(new SqlParameter("@Gender", user.Gender));
-            parameters.Add(new SqlParameter("@DateOfBirth", user.DateOfBirth));
-            parameters.Add(new SqlParameter("@Password", user.Account.Password));
+            parameters.Add(new SqlParameter("@Username", Username));
+            parameters.Add(new SqlParameter("@Fullname", Fullname));
+            parameters.Add(new SqlParameter("@Email", Email));
+            parameters.Add(new SqlParameter("@Phone", Phone));
+            parameters.Add(new SqlParameter("@Gender", Gender));
+            parameters.Add(new SqlParameter("@DateOfBirth", DateOfBirth));
+            parameters.Add(new SqlParameter("@Password", Password));
 
             var result = await Task.Run(() => dbContext.Database.ExecuteSqlRawAsync(
                 @"exec proc_AddUserAndAccount @Username, @Fullname, @Email, @Phone, @Gender, @DateOfBirth, @Password", parameters.ToArray()

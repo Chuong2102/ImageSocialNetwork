@@ -12,6 +12,7 @@ using ImageSocialNetwork.Infrastructure.Queries;
 using ImageSocialNetwork.Infrastructure.Entities;
 using Microsoft.AspNetCore.Hosting;
 using System.IO;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ImageSocialNetwork.Controllers
 {
@@ -70,6 +71,7 @@ namespace ImageSocialNetwork.Controllers
 
         // Create new post and upload new images to this post
         // return postID
+        [Authorize]
         [HttpPost]
         [Route("api/AddPost")]
         public async Task<int> AddPost([FromForm]FileUploadAPI fileUpload)
@@ -126,19 +128,6 @@ namespace ImageSocialNetwork.Controllers
         {
             return await mediator.Send(user);
         }
-
-        // Create new User
-        //
-        [HttpPost]
-        [Route("api/AddUser")]
-        public async Task<int> AddUser([FromBody] UserEntity user)
-        {
-            var result = await mediator.Send(new AddUserCommand(user));
-
-            return result;
-        }
-        
-            
 
     }
 }

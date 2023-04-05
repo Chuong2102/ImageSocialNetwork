@@ -11,7 +11,7 @@ using System.Threading;
 
 namespace ImageSocialNetwork.Infrastructure.Handlers
 {
-    class AddUserHandler : IRequestHandler<AddUserCommand ,int>
+    public class AddUserHandler : IRequestHandler<AddUserCommand ,int>
     {
         IUserRepository repository;
 
@@ -22,21 +22,8 @@ namespace ImageSocialNetwork.Infrastructure.Handlers
 
         public async Task<int> Handle(AddUserCommand request, CancellationToken cancellationToken)
         {
-            UserEntity user = new UserEntity
-            {
-                UserName = request.Username,
-                FullName = request.Fullname,
-                Email = request.Email,
-                Phone = request.Phone,
-                Gender = request.Gender,
-                DateOfBirth = request.DateOfBirth,
-                Account = new AccountEntity
-                {
-                    Password = request.Password
-                }
-            };
-
-            return await repository.AddUserAsync(user);
+            return await repository.AddUserAsync(request.Username, request.Password, request.Fullname,
+                request.Phone, request.Gender, request.Email, request.DateOfBirth);
         }
     }
 }

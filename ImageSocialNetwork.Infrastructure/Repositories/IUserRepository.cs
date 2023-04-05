@@ -9,6 +9,7 @@ namespace ImageSocialNetwork.Infrastructure.Repositories
 {
     public interface IUserRepository
     {
-        public Task<int> AddUserAsync(UserEntity user);
+        public Task<int> AddUserAsync(string Username, string Password, 
+            string Fullname, string Phone, int Gender, string Email, DateTime DateOfBirth);
     }
 }

@@ -17,18 +17,6 @@ namespace ImageSocialNetwork.Infrastructure.Commands
         public int Gender { get; set; }
         public DateTime DateOfBirth { get; set; }
         public string Password { get; set; }
-
-        public AddUserCommand(UserEntity user)
-        {
-            this.Username = user.UserName;
-            this.Fullname = user.FullName;
-            this.Email = user.Email;
-            this.Phone = user.Phone;
-            this.Gender = user.Gender;
-            this.DateOfBirth = user.DateOfBirth;
-            this.Password = user.Account.Password;
-
-
-        }
+        
     }
 }

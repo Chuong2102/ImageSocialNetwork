@@ -60,6 +60,9 @@ namespace ImageSocialNetwork
             // Like
             services.AddScoped(typeof(ILikeRepository), typeof(LikeRepository));
             services.AddMediatR(typeof(LikeRepository).Assembly);
+            // User
+            services.AddScoped(typeof(IUserRepository), typeof(UserRepository));
+            services.AddMediatR(typeof(UserRepository).Assembly);
 
             // add Swagger genarator
             services.AddSwaggerGen(s =>

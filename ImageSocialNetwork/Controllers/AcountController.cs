@@ -14,6 +14,7 @@ using ImageSocialNetwork.Infrastructure.Repositories;
 using ImageSocialNetwork.Infrastructure.EF;
 using MediatR;
 using ImageSocialNetwork.Infrastructure.Queries;
+using ImageSocialNetwork.Infrastructure.Commands;
 
 namespace ImageSocialNetwork.Controllers
 {
@@ -21,26 +22,19 @@ namespace ImageSocialNetwork.Controllers
     [ApiController]
     public class AcountController : ControllerBase
     {
-        AccountRepository accountRepo;
         IMediator mediator;
 
-        //public AcountController(IConfiguration config, ImageSocialDbContext context)
-        //{
-        //    accountRepo = new AccountRepository(context, config);
-        //}
 
         public AcountController(IMediator media)
         {
             mediator = media;
         }
 
-
-        [HttpGet]
+        [HttpPost]
         [Route("api/SignUp")]
-        public Task SignUp(int ID, string Username, string Password, string Role)
+        public async Task<int> SignUp([FromBody]AddUserCommand user)
         {
-            accountRepo.AddAccount(ID, Username, Password, Role);
-            return Task.CompletedTask;
+            return await mediator.Send(user);
         }
 
         [Authorize]
@@ -72,7 +66,7 @@ namespace ImageSocialNetwork.Controllers
             return new
             {
                 account = account,
-                token = new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken)
+                token = "BEARER " + new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken)
             };
 
         }
