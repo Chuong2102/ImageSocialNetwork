@@ -8,15 +8,18 @@ using ImageSocialNetwork.Infrastructure.EF;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Data.SqlClient;
 using System.Data;
+using Dapper;
 
 namespace ImageSocialNetwork.Infrastructure.Repositories
 {
     public class PostRepository : IPostRespository
     {
         readonly ImageSocialDbContext dbContext;
-        public PostRepository(ImageSocialDbContext dbContext)
+        readonly Dapper.DapperContext dapperContext;
+        public PostRepository(ImageSocialDbContext dbContext, Dapper.DapperContext dapper)
         {
             this.dbContext = dbContext;
+            this.dapperContext = dapper;
         }
 
         public async Task<int> AddPostAsync(PostEntity post)
@@ -40,22 +43,32 @@ namespace ImageSocialNetwork.Infrastructure.Repositories
 
         public async Task<IEnumerable<PostEntity>> GetFollwingUserPosts(int UserID)
         {
-            var par = new SqlParameter("@UserID", UserID);
-            List<PostEntity> listPost = new List<PostEntity>();
+            //var par = new SqlParameter("@UserID", UserID);
+            //List<PostEntity> listPost = new List<PostEntity>();
 
-            try
+            //try
+            //{
+            //    listPost = await Task.Run(() => dbContext.Posts.FromSqlRaw(
+            //    @"exec proc_FollowingPost @UserID", par).ToListAsync());
+
+
+            //}
+            //catch(Exception ex)
+            //{
+
+            //}
+
+            //return listPost;
+
+            var para = new DynamicParameters();
+
+            para.Add("UserID", UserID, DbType.Int32);
+
+            using(var connection = dapperContext.CreateConnection())
             {
-                listPost = await Task.Run(() => dbContext.Posts.FromSqlRaw(
-                @"exec proc_FollowingPost @UserID", par).ToListAsync());
-
-
+                var result = await connection.QueryAsync<PostEntity>("proc_FollowingPost", para, commandType: CommandType.StoredProcedure);
+                return result;
             }
-            catch(Exception ex)
-            {
-
-            }
-
-            return listPost;
         }
 
         public async Task<IEnumerable<PostEntity>> GetPost(int UserID)

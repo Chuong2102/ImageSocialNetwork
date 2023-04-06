@@ -114,7 +114,7 @@ namespace ImageSocialNetwork.Controllers
             return await mediator.Send(like);
         }
 
-        // Create list Post of userid' follwing user
+        // Get list Post of userid' follwing user
         [HttpPost]
         [Route("api/GetFollwingUserPosts")]
         public async Task<IEnumerable<PostEntity>> GetFollowingUserPost([FromBody] GetFollowingUserPostQuery user)
