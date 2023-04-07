@@ -22,7 +22,7 @@ namespace ImageSocialNetwork.Controllers
 
         [HttpPost]
         [Route("api/Upload")]
-        public async Task<string> Upload(IFormFile file)
+        public async Task<string> Upload([FromForm]IFormFile file)
         {
             if(file.Length > 0)
             {
