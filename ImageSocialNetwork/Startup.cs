@@ -124,15 +124,14 @@ namespace ImageSocialNetwork
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
-                app.UseSwaggerUI(s => {
-                    s.SwaggerEndpoint("/swagger/v1/swagger.json", "Upload image api");
-                });
+                app.UseSwaggerUI();
             }
 
             app.UseAuthentication();
 
             app.UseRouting();
             app.UseAuthorization();
+            app.UseHttpsRedirection();
 
             app.UseEndpoints(endpoints =>
             {
